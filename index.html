@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sample Page</title>
+</head>
+<body>
+<Script>
+
+function handleResult(result,error){
+ if(error){
+  
+   document.getElementById("outputMsg").innerHTML= "<br>"+error;
+ }else{
+    document.getElementById("outputMsg").innerHTML= "<br>"+result;
+ }
+}
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4){
+            if( xmlHttp.status == 200){
+                callback(xmlHttp.responseText);
+            }else{
+                callback(null,"some error");
+            }
+        }
+
+         
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
+function handleGetService(){
+  httpGetAsync("https://api.github.com/users/gunjank",handleResult);
+  
+}
+</Script>
+<button type="button" onclick="handleGetService()"> Call Service </button>
+<output id="outputMsg"></output>
+
+    
+</body>
+</html>
